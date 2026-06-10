@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1er Añito - Ginebra Kristell</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES Y RESET --- */
+        :root {
+            --dorado: #FFB800;
+            --dorado-claro: #FFD54F;
+            --texto-oscuro: #3D2C00;
+            --texto-claro: #6B5B3E;
+            --fondo: #FFFBF0;
+            --blanco: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--fondo);
+            color: var(--texto-oscuro);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--blanco);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* --- POLEN ANIMADO --- */
+        #pollen-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; 
+            z-index: 9999; 
+            overflow: hidden;
+        }
+
+        .polen {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,184,0,0.8) 0%, rgba(255,213,79,0) 70%);
+            border-radius: 50%;
+            bottom: -50px;
+            animation: flotar linear infinite;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- BOTÓN MÚSICA --- */
+        .btn-musica {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 50px; height: 50px; background-color: var(--dorado); color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; box-shadow: 0 4px 15px rgba(255, 184, 0, 0.5);
+            cursor: pointer; z-index: 10000; border: 2px solid white; transition: transform 0.3s;
+        }
+
+        /* --- SECCIONES --- */
+        .hero {
+            text-align: center; padding: 60px 20px 40px;
+            background: linear-gradient(180deg, #FFF6D9 0%, rgba(255,255,255,1) 100%);
+        }
+        .hero h1 { font-family: 'Dancing Script', cursive; font-size: 4rem; color: var(--dorado); line-height: 1; margin-bottom: 10px; }
+        .hero h2 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; color: var(--texto-oscuro); margin-bottom: 30px; }
+
+        .foto-destacada {
+            width: 250px; height: 250px; margin: 0 auto 30px;
+            border-radius: 50%; border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(255, 184, 0, 0.3);
+            background: url('foto1.png') center/cover; 
+            background-color: #f0f0f0;
+        }
+
+        .seccion { padding: 50px 30px; text-align: center; background-color: white; }
+        .titulo-seccion { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--dorado); margin-bottom: 20px; }
+
+        /* --- CUENTA REGRESIVA --- */
+        .countdown-container { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .time-box {
+            background-color: var(--dorado-claro); color: var(--texto-oscuro);
+            padding: 10px; border-radius: 10px; min-width: 65px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .time-box span { display: block; font-size: 1.5rem; font-weight: 700; line-height: 1; }
+        .time-box p { font-size: 0.7rem; margin-top: 5px; text-transform: uppercase; font-weight: 600; }
+
+        /* --- ITINERARIO --- */
+        .timeline { position: relative; max-width: 400px; margin: 0 auto; text-align: left; padding-left: 20px; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; background: var(--dorado-claro); border-radius: 5px; }
+        .timeline-item { position: relative; margin-bottom: 30px; padding-left: 30px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-icon {
+            position: absolute; left: -21px; top: 0; width: 40px; height: 40px;
+            background: var(--dorado); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 4px solid white; font-size: 1.1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .timeline-content h3 { font-size: 1.2rem; color: var(--texto-oscuro); margin-bottom: 5px; }
+        .timeline-content p { font-size: 0.95rem; color: var(--texto-claro); }
+
+        /* --- BOTÓN CALENDARIO --- */
+        .btn-calendario {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background-color: #4285F4; color: white; padding: 12px 25px;
+            border-radius: 50px; text-decoration: none; font-size: 1rem; font-weight: 600;
+            margin-top: 20px; box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+            transition: transform 0.3s;
+        }
+        .btn-calendario:hover { transform: translateY(-3px); }
+
+        /* --- TRIVIA --- */
+        .trivia-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .btn-trivia {
+            background-color: white; border: 2px solid var(--dorado); color: var(--texto-oscuro);
+            padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; 
+            font-family: 'Poppins', sans-serif; cursor: pointer; transition: all 0.3s;
+        }
+        .btn-trivia:hover, .btn-trivia:active { background-color: var(--dorado); color: white; }
+        .trivia-respuesta {
+            display: none; margin-top: 20px; padding: 15px; border-radius: 10px; 
+            background-color: #FFFDF5; border: 1px dashed var(--dorado); font-weight: bold;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- BOTÓN WHATSAPP --- */
+        .cta-container { padding: 60px 20px; text-align: center; background-color: #3D2C00; color: white; border-top: 5px solid var(--dorado); }
+        .btn-whatsapp {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background-color: #25D366; color: white; padding: 18px 25px;
+            border-radius: 50px; text-decoration: none; font-size: 1.1rem; font-weight: 600;
+            margin-top: 20px; width: 100%; max-width: 380px; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
+            animation: latido 2s infinite;
+        }
+        @keyframes latido { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+    </style>
+</head>
+<body>
+
+    <audio id="musicaFondo" loop>
+        <source src="cancion-infantil.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="btn-musica" id="btnMusica" onclick="toggleMusica()">
+        <i class="fa-solid fa-music"></i>
+    </div>
+
+    <div id="pollen-container"></div>
+
+    <div class="container">
+        
+        <header class="hero" data-aos="fade-down" data-aos-duration="1000">
+            <div class="foto-destacada"></div>
+            <h2>Mi 1er Añito</h2>
+            <h1 data-aos="zoom-in" data-aos-delay="300">Ginebra Kristell</h1>
+            <p style="color: var(--dorado); font-weight: bold; letter-spacing: 2px;">LANGUIDEY VERA</p>
+            
+            <div class="countdown-container" id="countdown" style="margin-top: 30px;"></div>
+        </header>
+
+        <section class="seccion" data-aos="fade-up">
+            <p style="font-size: 1.1rem; color: var(--texto-claro); font-style: italic; margin-bottom: 20px;">
+                "Te invitamos a celebrar con alegría el primer añito de nuestra adorada hijita, quien nos ha llenado de dulzura desde el día en que llegó a nuestras vidas."
+            </p>
+            <div style="width: 100%; height: 250px; border-radius: 15px; background: url('foto2.png') center/cover; background-color: #f0f0f0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);" data-aos="flip-left"></div>
+        </section>
+
+        <section class="seccion" style="background-color: #FAFAFA;" data-aos="fade-up">
+            <h2 class="titulo-seccion">Itinerario de Dulzura</h2>
+            <p style="margin-bottom: 30px; color: var(--texto-claro);">¡No te pierdas de nada!</p>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="100">
+                    <div class="timeline-icon"><i class="fa-solid fa-door-open"></i></div>
+                    <div class="timeline-content">
+                        <h3>14:30 P.M.</h3>
+                        <p>Bienvenida a la colmena. ¡Lleguen puntuales!</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200">
+                    <div class="timeline-icon"><i class="fa-solid fa-hat-wizard"></i></div>
+                    <div class="timeline-content">
+                        <h3>15:30 P.M.</h3>
+                        <p>¡Gran Show de Payasitos y juegos divertidos!</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="300">
+                    <div class="timeline-icon"><i class="fa-solid fa-burger"></i></div>
+                    <div class="timeline-content">
+                        <h3>16:30 P.M.</h3>
+                        <p>Apertura de la mesa dulce y merienda.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400">
+                    <div class="timeline-icon"><i class="fa-solid fa-cake-candles"></i></div>
+                    <div class="timeline-content">
+                        <h3>17:30 P.M.</h3>
+                        <p>Cantamos el Feliz Cumpleaños y rompemos la piñata.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion" data-aos="fade-up">
+            <h2 class="titulo-seccion">La Colmena</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 10px;"><strong>Sábado 13 de Junio de 2026</strong></p>
+            <p>Calle Santa Cruz, Zona Calvario<br>Quillacollo</p>
+
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=1er+A%C3%B1ito+de+Ginebra+Kristell&dates=20260613T183000Z/20260613T223000Z&details=¡Celebremos+el+primer+a%C3%B1ito+de+Ginebra!&location=-17.422540,-66.286919" target="_blank" class="btn-calendario">
+            <i class="fa-regular fa-calendar-plus"></i> Agendar en mi Calendario
+            </a>
+
+            <div style="margin-top: 30px; border-radius: 15px; overflow: hidden; border: 5px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1);" data-aos="zoom-in">
+                <iframe src="https://maps.google.com/maps?q=-17.422540,-66.286919&z=17&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <section class="seccion" style="background-color: #FAFAFA;" data-aos="fade-up">
+            <h2 class="titulo-seccion">Mini Trivia</h2>
+            <p style="font-size: 1.1rem; color: var(--texto-claro);">Antes de confirmar... ¿A quién crees que se parece más Ginebra?</p>
+            
+            <div class="trivia-container">
+                <button class="btn-trivia" onclick="mostrarRespuesta('mama')">A Mamá</button>
+                <button class="btn-trivia" onclick="mostrarRespuesta('papa')">A Papá</button>
+            </div>
+            
+            <div id="trivia-respuesta" class="trivia-respuesta"></div>
+        </section>
+
+        <section class="cta-container" data-aos="fade-up">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--dorado);">¡Te esperamos!</h2>
+            <p style="margin-top: 10px; font-size: 1rem; color: #f0f0f0;">Por favor, confírmanos tu asistencia y déjanos un lindo deseo para la cumpleañera.</p>
+            
+            <a href="https://wa.me/59100000000?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%201er%20añito%20de%20Ginebra%20Kristell%20🐝.%20Mi%20mayor%20deseo%20para%20ella%20es:%20" class="btn-whatsapp" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> Confirmar y dejar un deseo
+            </a>
+        </section>
+
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        // POLEN MEJORADO
+        function crearPolen() {
+            const container = document.getElementById('pollen-container');
+            const cantidad = 25; 
+
+            for (let i = 0; i < cantidad; i++) {
+                let polen = document.createElement('div');
+                polen.classList.add('polen');
+                
+                let size = Math.random() * 15 + 8; 
+                let left = Math.random() * 100; 
+                let duration = Math.random() * 6 + 6; 
+                let delay = Math.random() * 5;
+
+                polen.style.width = size + 'px';
+                polen.style.height = size + 'px';
+                polen.style.left = left + 'vw';
+                polen.style.animationDuration = duration + 's';
+                polen.style.animationDelay = delay + 's';
+
+                container.appendChild(polen);
+            }
+        }
+        crearPolen();
+
+        // CUENTA REGRESIVA
+        const fechaFiesta = new Date("June 13, 2026 14:30:00").getTime();
+
+        const intervalo = setInterval(function() {
+            const ahora = new Date().getTime();
+            const distancia = fechaFiesta - ahora;
+
+            if (distancia < 0) {
+                clearInterval(intervalo);
+                document.getElementById("countdown").innerHTML = "<p style='color: var(--dorado); font-weight: bold; font-size: 1.2rem;'>¡Es hoy, te esperamos!</p>";
+                return;
+            }
+
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById("countdown").innerHTML = `
+                <div class="time-box"><span>${dias}</span><p>Días</p></div>
+                <div class="time-box"><span>${horas}</span><p>Hrs</p></div>
+                <div class="time-box"><span>${minutos}</span><p>Min</p></div>
+            `;
+        }, 1000);
+
+        // MÚSICA
+        const audio = document.getElementById("musicaFondo");
+        const btnMusica = document.getElementById("btnMusica");
+        let isPlaying = false;
+
+        function toggleMusica() {
+            if (isPlaying) {
+                audio.pause();
+                btnMusica.innerHTML = '<i class="fa-solid fa-music"></i>';
+                btnMusica.style.backgroundColor = "var(--dorado)";
+            } else {
+                audio.play();
+                btnMusica.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                btnMusica.style.backgroundColor = "#ff9f00";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // LÓGICA MINI TRIVIA
+        function mostrarRespuesta(eleccion) {
+            const respuestaDiv = document.getElementById('trivia-respuesta');
+            if (eleccion === 'mama') {
+                respuestaDiv.innerHTML = "¡Obvio, es la fotocopia hermosa de mamá! 🥰🐝";
+            } else {
+                respuestaDiv.innerHTML = "¡Papá jura que sí, pero todos sabemos la verdad! 🤭🐝";
+            }
+            respuestaDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
